@@ -1,0 +1,51 @@
+PRACTICA 4 TALLER DE BASE DE DATOS 
+
+
+create temporaly table prueba( id int
+
+--- craete table copia_persona like persona;
+show tables;
+
+select * from copia_persona;
+
+----create database t1_copia;
+----use t1_copia;
+----show tables;
+----- create table persona like t1_persona;
+---show tables;
+---create tabla persona_datos as select * from persona;
+----show table;
+----delete table persona_datos;
+----drop table persona_datos;
+----show table;
+---slect * from persona_datos;
+-----desc perona_datos;
+------create table persona_datos2 as select nombre, ap_paterno    
+----use sakila;
+----customer
+---select count(*) from customer;
+
+
+--como instalar las bases de datos de ejemplo, en msql?????
+
+---use t1;
+---desc customer;
+
+---use sakila;
+---desc actor;
+----use t1;
+craete table  actor like sakila.actor;
+----show table ;
+----desc actor ;
+---desc persona;
+--- craete table vehiculo( id_vehiculo int not null key auto_increment, marca vrachar (50) not null defaul"Nissan", modelo varchar (50) not null  defaul 2000,
+color varchar (50));
+----desc vehiculo;
+----insert into vehiculo(color)
+---values ("rojo"), ("verde"), ("gris");
+----select * from vehiculo;
+-----insert into vehiculo (marca, modelo, year)
+value ("Ford")
+
+
+
