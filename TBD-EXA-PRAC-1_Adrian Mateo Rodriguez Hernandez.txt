@@ -1,0 +1,232 @@
+C:\Users\admin>mysql -u root -p
+
+
+mysql> CREATE DATABASE tbd_exa1;
+Query OK, 1 row affected (0.01 sec)
+
+mysql> USE tbd_exa1;
+Database changed
+
+mysql> CREATE TABLE colegio (
+    -> id_colegio INT AUTO_INCREMENT PRIMARY KEY,
+    -> nombre_colegio VARCHAR(100) NOT NULL
+    -> );
+Query OK, 0 rows affected (0.03 sec)
+
+mysql> CREATE TABLE profesor (
+    -> id_profesor INT AUTO_INCREMENT PRIMARY KEY,
+    -> nombre_profesor VARCHAR(100) NOT NULL,
+    -> id_colegio INT NOT NULL,
+    -> FOREIGN KEY (id_colegio) REFERENCES colegio(id_colegio)
+    -> );
+Query OK, 0 rows affected (0.04 sec)
+
+mysql> CREATE TABLE asignatura (
+    -> id_asignatura INT AUTO_INCREMENT PRIMARY KEY,
+    -> nombre_asignatura VARCHAR(150) NOT NULL
+    -> );
+Query OK, 0 rows affected (0.03 sec)
+
+mysql> CREATE TABLE aula (
+    -> id_aula INT AUTO_INCREMENT PRIMARY KEY,
+    -> codigo_aula VARCHAR(20) NOT NULL
+    -> );
+Query OK, 0 rows affected (0.03 sec)
+
+mysql> CREATE TABLE curso (
+    -> id_curso INT AUTO_INCREMENT PRIMARY KEY,
+    -> nombre_curso VARCHAR(50) NOT NULL
+    -> );
+Query OK, 0 rows affected (0.03 sec)
+
+mysql> CREATE TABLE editorial (
+    -> id_editorial INT AUTO_INCREMENT PRIMARY KEY,
+    -> nombre_editorial VARCHAR(100) NOT NULL
+    -> );
+Query OK, 0 rows affected (0.03 sec)
+
+mysql> CREATE TABLE libro (
+    -> id_libro INT AUTO_INCREMENT PRIMARY KEY,
+    -> titulo VARCHAR(200) NOT NULL,
+    -> id_editorial INT NOT NULL,
+    -> FOREIGN KEY (id_editorial) REFERENCES editorial(id_editorial)
+    -> );
+Query OK, 0 rows affected (0.04 sec)
+
+mysql> CREATE TABLE prestamo (
+    -> id_prestamo INT AUTO_INCREMENT PRIMARY KEY,
+    -> id_profesor INT NOT NULL,
+    -> id_asignatura INT NOT NULL,
+    -> id_aula INT NOT NULL,
+    -> id_curso INT NOT NULL,
+    -> id_libro INT NOT NULL,
+    -> fecha_prestamo DATE NOT NULL,
+    -> FOREIGN KEY (id_profesor) REFERENCES profesor(id_profesor),
+    -> FOREIGN KEY (id_asignatura) REFERENCES asignatura(id_asignatura),
+    -> FOREIGN KEY (id_aula) REFERENCES aula(id_aula),
+    -> FOREIGN KEY (id_curso) REFERENCES curso(id_curso),
+    -> FOREIGN KEY (id_libro) REFERENCES libro(id_libro)
+    -> );
+Query OK, 0 rows affected (0.05 sec)
+
+mysql> INSERT INTO colegio (nombre_colegio) VALUES
+    -> ('C.P Cervantes'),
+    -> ('C.P Quevedo');
+Query OK, 2 rows affected (0.01 sec)
+
+mysql> INSERT INTO profesor (nombre_profesor, id_colegio) VALUES
+    -> ('Juan Pérez', 1),
+    -> ('Alicia García', 1),
+    -> ('Andrés Fernández', 1),
+    -> ('Juan Méndez', 2);
+Query OK, 4 rows affected (0.01 sec)
+
+mysql> INSERT INTO asignatura (nombre_asignatura) VALUES
+    -> ('Pensamiento Lógico'),
+    -> ('Escritura'),
+    -> ('Pensamiento Numérico'),
+    -> ('Pensamiento Espacial, Temporal y Causal'),
+    -> ('Ingles');
+Query OK, 5 rows affected (0.01 sec)
+
+mysql> INSERT INTO aula (codigo_aula) VALUES
+    -> ('1.A01'),
+    -> ('1.B01'),
+    -> ('2.B01');
+Query OK, 3 rows affected (0.01 sec)
+
+mysql> INSERT INTO curso (nombre_curso) VALUES
+    -> ('1er Grado'),
+    -> ('2do Grado');
+Query OK, 2 rows affected (0.01 sec)
+
+mysql> INSERT INTO editorial (nombre_editorial) VALUES
+    -> ('Graó'),
+    -> ('Técnicas Rubio'),
+    -> ('Prentice Hall'),
+    -> ('Temas de Hoy');
+Query OK, 4 rows affected (0.01 sec)
+
+mysql> INSERT INTO libro (titulo, id_editorial) VALUES
+    -> ('Aprender y enseñar en educación infantil', 1),
+    -> ('Preescolar Rubio,N56', 2),
+    -> ('Educación Infantil N9', 3),
+    -> ('Saber educar: guía para Padres y Profesores', 4);
+Query OK, 4 rows affected (0.01 sec)
+
+mysql> INSERT INTO prestamo
+    -> (id_profesor, id_asignatura, id_aula, id_curso, id_libro, fecha_prestamo)
+    -> VALUES
+    -> (1, 1, 1, 1, 1, '2010-09-09'),
+    -> (1, 2, 1, 1, 2, '2010-05-05'),
+    -> (1, 3, 1, 1, 1, '2010-05-05'),
+    -> (2, 4, 2, 1, 3, '2010-06-05'),
+    -> (2, 3, 2, 1, 1, '2010-06-05'),
+    -> (3, 2, 1, 2, 1, '2010-09-09'),
+    -> (3, 5, 1, 2, 4, '2010-05-05'),
+    -> (4, 1, 3, 1, 4, '2010-12-18'),
+    -> (4, 3, 3, 1, 1, '2010-06-05');
+Query OK, 9 rows affected (0.01 sec)
+
+mysql> SHOW TABLES;
++---------------------+
+| Tables_in_tbd_exa1 |
++---------------------+
+| asignatura          |
+| aula                |
+| colegio             |
+| curso               |
+| editorial           |
+| libro               |
+| prestamo            |
+| profesor            |
++---------------------+
+8 rows in set (0.00 sec)
+
+mysql> DESCRIBE colegio;
++-----------------+--------------+------+-----+---------+----------------+
+| Field           | Type         | Null | Key | Default | Extra          |
++-----------------+--------------+------+-----+---------+----------------+
+| id_colegio      | int          | NO   | PRI | NULL    | auto_increment |
+| nombre_colegio  | varchar(100) | NO   |     | NULL    |                |
++-----------------+--------------+------+-----+---------+----------------+
+
+mysql> DESCRIBE profesor;
++-----------------+--------------+------+-----+---------+----------------+
+| Field           | Type         | Null | Key | Default | Extra          |
++-----------------+--------------+------+-----+---------+----------------+
+| id_profesor     | int          | NO   | PRI | NULL    | auto_increment |
+| nombre_profesor | varchar(100) | NO   |     | NULL    |                |
+| id_colegio      | int          | NO   | MUL | NULL    |                |
++-----------------+--------------+------+-----+---------+----------------+
+
+mysql> DESCRIBE asignatura;
+mysql> DESCRIBE aula;
+mysql> DESCRIBE curso;
+mysql> DESCRIBE editorial;
+mysql> DESCRIBE libro;
+mysql> DESCRIBE prestamo;
+
+mysql> SHOW CREATE TABLE colegio;
+mysql> SHOW CREATE TABLE profesor;
+mysql> SHOW CREATE TABLE asignatura;
+mysql> SHOW CREATE TABLE aula;
+mysql> SHOW CREATE TABLE curso;
+mysql> SHOW CREATE TABLE editorial;
+mysql> SHOW CREATE TABLE libro;
+mysql> SHOW CREATE TABLE prestamo;
+
+mysql> SELECT * FROM colegio;
++------------+----------------+
+| id_colegio | nombre_colegio |
++------------+----------------+
+|          1 | C.P Cervantes  |
+|          2 | C.P Quevedo    |
++------------+----------------+
+
+mysql> SELECT * FROM profesor;
++-------------+------------------+------------+
+| id_profesor | nombre_profesor  | id_colegio |
++-------------+------------------+------------+
+|           1 | Juan Pérez       |          1 |
+|           2 | Alicia García    |          1 |
+|           3 | Andrés Fernández |          1 |
+|           4 | Juan Méndez      |          2 |
++-------------+------------------+------------+
+
+mysql> SELECT * FROM asignatura;
++---------------+---------------------------------------+
+| id_asignatura | nombre_asignatura                     |
++---------------+---------------------------------------+
+|             1 | Pensamiento Lógico                     |
+|             2 | Escritura                              |
+|             3 | Pensamiento Numérico                   |
+|             4 | Pensamiento Espacial, Temporal y Causal|
+|             5 | Ingles                                |
++---------------+---------------------------------------+
+
+mysql> SELECT * FROM aula;
++---------+-------------+
+| id_aula | codigo_aula |
++---------+-------------+
+|       1 | 1.A01       |
+|       2 | 1.B01       |
+|       3 | 2.B01       |
++---------+-------------+
+
+mysql> SELECT * FROM curso;
++----------+-------------+
+| id_curso | nombre_curso|
++----------+-------------+
+|        1 | 1er Grado   |
+|        2 | 2do Grado   |
++----------+-------------+
+
+mysql> SELECT * FROM editorial;
+mysql> SELECT * FROM libro;
+mysql> SELECT * FROM prestamo;
+
+mysql> EXIT;
+Bye
+
+C:\Users\admin>
