@@ -1,0 +1,39 @@
+TALLER DE BASES DE DATOS
+DIA MARTES 13 DE OCTUIBRE DEL 2026
+ALGEBRA RELACIONAL??? INVESTIGAR
+
+------------------------  practica 2   --------------------------
+
+use tallerbd2;
+show tables;
+créate table cliente(
+id_clienrte int not null key auto_increment, nombre varchar (59) not null, apellidos varchar (50) not null, fecha_nac date);
+insert into cliente (nombre , apellidos, fecha_nac)
+values ("juan", "perez", "05-05-1979"), ("pedro", "paramo", "05-05-1978);
+insert into client (nombre, apellids, fecha_nac) valu "juu", "ralf", "1978-05-05") ,("adrian", "adron" , "1990-09-09");
+select * from cliente;
+crate venta(   id_venta int not null key auto_increment, id_client int not null , fecha_venta date);
+insert into vanta(id_cliente, fecha_venta) values (1 , "2026-09-09"), (1, "2026-09-08), (2, "2026-08-09), (4, "2026-08-07"), (7,"2027-09-08");
+select * from venta;
+select * from cliente where id_cliente IN (select distinct (id_cliente from venta);
+select * from cliente whrw id_cliente NOT IN ( select tinct (id_cliente) from
+DESC CLIENTE;
+DESC VENTA;
+select * from venta where id_cliente = 1;1
+^
+select * from cliente;
+select * from ventas;
+isert into cliente  ( nombre, apellidos , fecha_nac) value( ^c insert into cliente value (1, ""juan", "perez", "1979-11-20");
+select * from cliente;
+drop table venta;
+create table venta( id_venta int not null key auto_inment, id;cliente int not null references cliente (id_cliente), fecha_venta date);
+show create venta;
+show crate table venta;
+drop table venta;
+crae table venta( id_venta int not  null key auto_increment, id cliente  not null, fecha_venta date, foreing  key (id_cliente) references cliente (id_cliente));
+
+isnert into venta (id_cliente, fecha_venta) value (5,"20206-10-12");
+select * from cliente;
+isnert into venta (id_cliente , fecha_venta) value(1, "2026-10-12");
+insert into vanta(id_cliente, fecha_venta) value(4, "]2026-20-12");
+delete from cliente set id_cliente =5 where id_cliente =1;

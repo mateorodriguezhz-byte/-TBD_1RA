@@ -1,0 +1,30 @@
+TALLER BASES DE DATIS UNIDAD 2 -----practica 4
+LUNES 19 DE OCTUBRE DEL AÑO 2026
+
+
+Crear una tabla con la siguiente informacion
+
+Carrera --> se permite
+borrar -> no se permite 
+estudiantes;
+id
+nombre
+
+estudiantes
+-id 
+id carrera
+nombre 
+
+---poner 1 a 2 valores de prueba
+
+que causa RESTRIC Y CASCADE , SET NULL , NO ACTICON , SET DEFAULT ????
+
+
+------------------------------------
+crear otra tabla llamada cliente 
+-cliente 
+-comida favorita --> id_comida
+<si borro la comida favorita se asigna null >
+
+-comida
+<si borro comida solo se borra comida pero el cliente no>

@@ -1,0 +1,52 @@
+
+PRACTICAA TALLER BASE_DATOS---2026
+
+______dia jueves 15 de octubre del 2026
+
+
+alter venta drop constraint venta_ibfk_1;
+alter table venta add foreing key id_cliente references (id_cliente) on delete cascade on update cascade;
+desc cliente;
+select * from cliente;
+delet from cliente where id cliente =1;
+
+select * from venta;
+upadate cliente set id_cliente = 5 where id_cliente =4;
+
+select * fro, cliente;
+
+select * from venta;
+
+id_producy int not null key auto_incremenet, ^c_prodcuto int not nullkey auto_increment, créate table producto ( id_product int not null key auto_increment, nombre varchar (50) not null , precio doublé not null, unida varchar (10) not null);
+
+desc
+
+insert into producto (nombre, precio, unidad) values("playeras", 5000, "pieza"), ("short" , 6000 , " pieza");
+
+select * from produco;
+
+craete table venta_datalle( id_venta_det int null key auto_increment, id_venta int_not null ,id_producto int null,cantidad int not null, foreing key (id_venta) refernces venta (id_venta) on update cascade on delete cascade , foreing key (id_producto) on update cascade, on delet cascade);
+
+
+select * from venta;
+
+insert into  venta(id_cliente , fecha
+isert into venta_detalle (id_venta, id_producto, cantidad) values (4,1,10), (4,3,20), (5,1,100), (6,2,50), (6,3,10);
+
+select * from venta;
+select * from venta_detalles;
+select * from producto;
+
+delet from cliente where id_cliente  =2;
+
+CASCADE???????
+
+
+update cliente set id_cliente =6 where id_cliente =3;
+
+select * from venta ;
+
+select * from producto;
+
+delet from producto where nombre  ="short";
+select * fro, venta_detalle 

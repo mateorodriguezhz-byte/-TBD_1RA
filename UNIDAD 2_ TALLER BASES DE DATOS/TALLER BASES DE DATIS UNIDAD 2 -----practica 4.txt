@@ -1,0 +1,254 @@
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 7
+Server version: 8.0.46 MySQL Community Server - GPL
+
+Copyright (c) 2000, 2026, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> SHOW DATABASES;
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| mysql              |
+| performance_schema |
+| sys                |
++--------------------+
+4 rows in set (0.01 sec)
+
+mysql> ^C
+mysql> CREATE DATABASE `TALLER BD UNI 2`;
+Query OK, 1 row affected (0.03 sec)
+
+mysql> SHOW DATABASES;
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| mysql              |
+| performance_schema |
+| sys                |
+| taller bd uni 2    |
++--------------------+
+5 rows in set (0.00 sec)
+
+mysql> USE `TALLER BD UNI 2`;
+Database changed
+mysql> CREATE TABLE carrera (
+    ->     id INT AUTO_INCREMENT PRIMARY KEY,
+    ->     nombre VARCHAR(100) NOT NULL
+    -> ;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 3
+mysql> CREATE TABLE carrera (
+    ->     id INT AUTO_INCREMENT PRIMARY KEY,
+    ->     nombre VARCHAR(100) NOT NULL
+    -> );
+Query OK, 0 rows affected (0.07 sec)
+
+mysql> SHOW TABLES;
++---------------------------+
+| Tables_in_taller bd uni 2 |
++---------------------------+
+| carrera                   |
++---------------------------+
+1 row in set (0.00 sec)
+
+mysql> CREATE TABLE estudiantes (
+    ->     id INT AUTO_INCREMENT PRIMARY KEY,
+    ->     id_carrera INT NOT NULL,
+    ->     nombre VARCHAR(100) NOT NULL,
+    ->     FOREIGN KEY (id_carrera)
+    ->         REFERENCES carrera(id)
+    ->         ON DELETE RESTRICT
+    ->         ON UPDATE CASCADE
+    -> );
+Query OK, 0 rows affected (0.08 sec)
+
+mysql> INSERT INTO carrera (nombre)
+    -> VALUES
+    -> ('Ingeniería en Sistemas'),
+    -> ('Ingeniería Industrial');
+Query OK, 2 rows affected (0.02 sec)
+Records: 2  Duplicates: 0  Warnings: 0
+
+mysql> INSERT INTO estudiantes (id_carrera, nombre)
+    -> VALUES
+    -> (1, 'Juan Pérez'),
+    -> (2, 'María López');
+Query OK, 2 rows affected (0.01 sec)
+Records: 2  Duplicates: 0  Warnings: 0
+
+mysql> SELECT
+    ->     e.id,
+    ->     e.nombre AS estudiante,
+    ->     c.nombre AS carrera
+    -> FROM estudiantes e
+    -> INNER JOIN carrera c
+    ->     ON e.id_carrera = c.id;
++----+-------------+------------------------+
+| id | estudiante  | carrera                |
++----+-------------+------------------------+
+|  1 | Juan Pérez  | Ingeniería en Sistemas |
+|  2 | María López | Ingeniería Industrial  |
++----+-------------+------------------------+
+2 rows in set (0.00 sec)
+
+mysql> INSERT INTO carrera (nombre)
+    -> VALUES
+    -> ('Contabilidad'),
+    -> ('Administración de Empresas'),
+    -> ('Ingeniería Civil'),
+    -> ('Derecho'),
+    -> ('Medicina'),
+    -> ('Arquitectura');
+Query OK, 6 rows affected (0.02 sec)
+Records: 6  Duplicates: 0  Warnings: 0
+
+mysql> INSERT INTO estudiantes (id_carrera, nombre)
+    -> VALUES
+    -> (1, 'Carlos Ramírez'),
+    -> (1, 'Ana Martínez'),
+    -> (2, 'Luis Hernández'),
+    -> (2, 'Sofía Torres'),
+    -> (3, 'Pedro González'),
+    -> (3, 'Laura Sánchez'),
+    -> (4, 'Miguel Flores'),
+    -> (5, 'Daniela Cruz'),
+    -> (6, 'José Morales'),
+    -> (7, 'Valentina Reyes');
+Query OK, 10 rows affected (0.01 sec)
+Records: 10  Duplicates: 0  Warnings: 0
+
+mysql> SELECT
+    ->     e.id,
+    ->     e.nombre AS estudiante,
+    ->     c.nombre AS carrera
+    -> FROM estudiantes e
+    -> INNER JOIN carrera c
+    ->     ON e.id_carrera = c.id
+    -> ORDER BY c.id, e.id;
++----+-----------------+----------------------------+
+| id | estudiante      | carrera                    |
++----+-----------------+----------------------------+
+|  1 | Juan Pérez      | Ingeniería en Sistemas     |
+|  3 | Carlos Ramírez  | Ingeniería en Sistemas     |
+|  4 | Ana Martínez    | Ingeniería en Sistemas     |
+|  2 | María López     | Ingeniería Industrial      |
+|  5 | Luis Hernández  | Ingeniería Industrial      |
+|  6 | Sofía Torres    | Ingeniería Industrial      |
+|  7 | Pedro González  | Contabilidad               |
+|  8 | Laura Sánchez   | Contabilidad               |
+|  9 | Miguel Flores   | Administración de Empresas |
+| 10 | Daniela Cruz    | Ingeniería Civil           |
+| 11 | José Morales    | Derecho                    |
+| 12 | Valentina Reyes | Medicina                   |
++----+-----------------+----------------------------+
+12 rows in set (0.00 sec)
+
+mysql> SELECT * FROM carrera;
++----+----------------------------+
+| id | nombre                     |
++----+----------------------------+
+|  1 | Ingeniería en Sistemas     |
+|  2 | Ingeniería Industrial      |
+|  3 | Contabilidad               |
+|  4 | Administración de Empresas |
+|  5 | Ingeniería Civil           |
+|  6 | Derecho                    |
+|  7 | Medicina                   |
+|  8 | Arquitectura               |
++----+----------------------------+
+8 rows in set (0.00 sec)
+
+mysql> CREATE TABLE comida (id INT AUTO_INCREMENT PRIMARY KEY, nombre VARCHAR(100) NOT NULL);
+Query OK, 0 rows affected (0.08 sec)
+
+mysql> CREATE TABLE cliente (id INT AUTO_INCREMENT PRIMARY KEY, nombre VARCHAR(100) NOT NULL, id_comida INT NULL, FOREIGN KEY (id_comida) REFERENCES comida(id) ON DELETE SET NULL);
+Query OK, 0 rows affected (0.07 sec)
+
+mysql> INSERT INTO comida (nombre) VALUES ('Pizza'), ('Hamburguesa'), ('Tacos');
+Query OK, 3 rows affected (0.01 sec)
+Records: 3  Duplicates: 0  Warnings: 0
+
+mysql> INSERT INTO cliente (nombre, id_comida) VALUES ('Juan', 1), ('Ana', 2), ('Pedro', 3);
+Query OK, 3 rows affected (0.01 sec)
+Records: 3  Duplicates: 0  Warnings: 0
+
+mysql> SELECT * FROM comida;
++----+-------------+
+| id | nombre      |
++----+-------------+
+|  1 | Pizza       |
+|  2 | Hamburguesa |
+|  3 | Tacos       |
++----+-------------+
+3 rows in set (0.00 sec)
+
+mysql> SELECT * FROM cliente;
++----+--------+-----------+
+| id | nombre | id_comida |
++----+--------+-----------+
+|  1 | Juan   |         1 |
+|  2 | Ana    |         2 |
+|  3 | Pedro  |         3 |
++----+--------+-----------+
+3 rows in set (0.00 sec)
+
+mysql> SELECT cliente.id, cliente.nombre, comida.nombre AS comida_favorita FROM cliente LEFT JOIN comida ON cliente.id_comida = comida.id;
++----+--------+-----------------+
+| id | nombre | comida_favorita |
++----+--------+-----------------+
+|  1 | Juan   | Pizza           |
+|  2 | Ana    | Hamburguesa     |
+|  3 | Pedro  | Tacos           |
++----+--------+-----------------+
+3 rows in set (0.00 sec)
+
+mysql> SELECT cliente.id, cliente.nombre, comida.nombre AS comida_favorita FROM cliente LEFT JOIN comida ON cliente.id_comida = comida.id;
++----+--------+-----------------+
+| id | nombre | comida_favorita |
++----+--------+-----------------+
+|  1 | Juan   | Pizza           |
+|  2 | Ana    | Hamburguesa     |
+|  3 | Pedro  | Tacos           |
++----+--------+-----------------+
+3 rows in set (0.00 sec)
+
+mysql> DELETE FROM comida WHERE id = 1;
+Query OK, 1 row affected (0.01 sec)
+
+mysql> SELECT cliente.id, cliente.nombre, comida.nombre AS comida_favorita FROM cliente LEFT JOIN comida ON cliente.id_comida = comida.id;
++----+--------+-----------------+
+| id | nombre | comida_favorita |
++----+--------+-----------------+
+|  1 | Juan   | NULL            |
+|  2 | Ana    | Hamburguesa     |
+|  3 | Pedro  | Tacos           |
++----+--------+-----------------+
+3 rows in set (0.00 sec)
+
+mysql> SELECT * FROM cliente;
++----+--------+-----------+
+| id | nombre | id_comida |
++----+--------+-----------+
+|  1 | Juan   |      NULL |
+|  2 | Ana    |         2 |
+|  3 | Pedro  |         3 |
++----+--------+-----------+
+3 rows in set (0.00 sec)
+
+mysql> jdjdd
+    ->
+    ->
+    ->
+    ->
+    ->
+    ->
+    -> ;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'jdjdd' at line 1
+mysql>
