@@ -1,0 +1,762 @@
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 7
+Server version: 8.0.46 MySQL Community Server - GPL
+
+Copyright (c) 2000, 2026, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> SELECT DATABASE();
++------------+
+| DATABASE() |
++------------+
+| NULL       |
++------------+
+1 row in set (0.00 sec)
+
+mysql> SHOW DATABASES;
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| mysql              |
+| performance_schema |
+| sakila_nueva       |
+| sys                |
+| taller bd uni 2    |
++--------------------+
+6 rows in set (0.01 sec)
+
+mysql> use sakila_nueva;
+Database changed
+mysql> SHOW TABLES;
++----------------------------+
+| Tables_in_sakila_nueva     |
++----------------------------+
+| actor                      |
+| actor_info                 |
+| address                    |
+| category                   |
+| city                       |
+| country                    |
+| customer                   |
+| customer_list              |
+| film                       |
+| film_actor                 |
+| film_category              |
+| film_list                  |
+| film_text                  |
+| inventory                  |
+| language                   |
+| nicer_but_slower_film_list |
+| payment                    |
+| rental                     |
+| sales_by_film_category     |
+| sales_by_store             |
+| staff                      |
+| staff_list                 |
+| store                      |
++----------------------------+
+23 rows in set (0.00 sec)
+
+mysql> SELECT a.title, c.name AS categoria
+    -> FROM film a
+    -> INNER JOIN film_category b
+    ->     ON a.film_id = b.film_id
+    -> INNER JOIN category c
+    ->     ON c.category_id = b.category_id
+    -> LIMIT 100;
++-------------------------+-----------+
+| title                   | categoria |
++-------------------------+-----------+
+| AMADEUS HOLY            | Action    |
+| AMERICAN CIRCUS         | Action    |
+| ANTITRUST TOMATOES      | Action    |
+| ARK RIDGEMONT           | Action    |
+| BAREFOOT MANCHURIAN     | Action    |
+| BERETS AGENT            | Action    |
+| BRIDE INTRIGUE          | Action    |
+| BULL SHAWSHANK          | Action    |
+| CADDYSHACK JEDI         | Action    |
+| CAMPUS REMEMBER         | Action    |
+| CASUALTIES ENCINO       | Action    |
+| CELEBRITY HORN          | Action    |
+| CLUELESS BUCKET         | Action    |
+| CROW GREASE             | Action    |
+| DANCES NONE             | Action    |
+| DARKO DORADO            | Action    |
+| DARN FORRESTER          | Action    |
+| DEVIL DESIRE            | Action    |
+| DRAGON SQUAD            | Action    |
+| DREAM PICKUP            | Action    |
+| DRIFTER COMMANDMENTS    | Action    |
+| EASY GLADIATOR          | Action    |
+| ENTRAPMENT SATISFACTION | Action    |
+| EXCITEMENT EVE          | Action    |
+| FANTASY TROOPERS        | Action    |
+| FIREHOUSE VIETNAM       | Action    |
+| FOOL MOCKINGBIRD        | Action    |
+| FORREST SONS            | Action    |
+| GLASS DYING             | Action    |
+| GOSFORD DONNIE          | Action    |
+| GRAIL FRANKENSTEIN      | Action    |
+| HANDICAP BOONDOCK       | Action    |
+| HILLS NEIGHBORS         | Action    |
+| KISSING DOLLS           | Action    |
+| LAWRENCE LOVE           | Action    |
+| LORD ARIZONA            | Action    |
+| LUST LOCK               | Action    |
+| MAGNOLIA FORRESTER      | Action    |
+| MIDNIGHT WESTWARD       | Action    |
+| MINDS TRUMAN            | Action    |
+| MOCKINGBIRD HOLLYWOOD   | Action    |
+| MONTEZUMA COMMAND       | Action    |
+| PARK CITIZEN            | Action    |
+| PATRIOT ROMAN           | Action    |
+| PRIMARY GLASS           | Action    |
+| QUEST MUSSOLINI         | Action    |
+| REAR TRADING            | Action    |
+| RINGS HEARTBREAKERS     | Action    |
+| RUGRATS SHAKESPEARE     | Action    |
+| SHRUNK DIVINE           | Action    |
+| SIDE ARK                | Action    |
+| SKY MIRACLE             | Action    |
+| SOUTH WAIT              | Action    |
+| SPEAKEASY DATE          | Action    |
+| STAGECOACH ARMAGEDDON   | Action    |
+| STORY SIDE              | Action    |
+| SUSPECTS QUILLS         | Action    |
+| TRIP NEWTON             | Action    |
+| TRUMAN CRAZY            | Action    |
+| UPRISING UPTOWN         | Action    |
+| WATERFRONT DELIVERANCE  | Action    |
+| WEREWOLF LOLA           | Action    |
+| WOMEN DORADO            | Action    |
+| WORST BANGER            | Action    |
+| ALTER VICTORY           | Animation |
+| ANACONDA CONFESSIONS    | Animation |
+| ARGONAUTS TOWN          | Animation |
+| BIKINI BORROWERS        | Animation |
+| BLACKOUT PRIVATE        | Animation |
+| BORROWERS BEDAZZLED     | Animation |
+| CANYON STOCK            | Animation |
+| CAROL TEXAS             | Animation |
+| CHAMPION FLATLINERS     | Animation |
+| CLASH FREDDY            | Animation |
+| CLUB GRAFFITI           | Animation |
+| CROSSROADS CASUALTIES   | Animation |
+| DARES PLUTO             | Animation |
+| DESIRE ALIEN            | Animation |
+| DOGMA FAMILY            | Animation |
+| DONNIE ALLEY            | Animation |
+| DOORS PRESIDENT         | Animation |
+| DOUBLE WRATH            | Animation |
+| DUCK RACER              | Animation |
+| EARLY HOME              | Animation |
+| FALCON VOLUME           | Animation |
+| FIGHT JAWBREAKER        | Animation |
+| FLOATS GARDEN           | Animation |
+| FLYING HOOK             | Animation |
+| FORRESTER COMANCHEROS   | Animation |
+| GANGS PRIDE             | Animation |
+| GHOSTBUSTERS ELF        | Animation |
+| HARPER DYING            | Animation |
+| HOOK CHARIOTS           | Animation |
+| HORN WORKING            | Animation |
+| INCH JET                | Animation |
+| INSECTS STONE           | Animation |
+| INTENTIONS EMPIRE       | Animation |
+| ISHTAR ROCKETEER        | Animation |
+| JUGGLER HARDLY          | Animation |
+| LAWLESS VISION          | Animation |
++-------------------------+-----------+
+100 rows in set (0.02 sec)
+
+mysql> SELECT
+    ->     a.actor_id,
+    ->     CONCAT(a.first_name, ' ', a.last_name) AS actor,
+    ->     f.film_id,
+    ->     f.title AS pelicula
+    -> FROM actor a
+    -> INNER JOIN film_actor fa
+    ->     ON a.actor_id = fa.actor_id
+    -> INNER JOIN film f
+    ->     ON f.film_id = fa.film_id
+    -> LIMIT 100;
++----------+---------------------+---------+-----------------------+
+| actor_id | actor               | film_id | pelicula              |
++----------+---------------------+---------+-----------------------+
+|        1 | PENELOPE GUINESS    |       1 | ACADEMY DINOSAUR      |
+|        1 | PENELOPE GUINESS    |      23 | ANACONDA CONFESSIONS  |
+|        1 | PENELOPE GUINESS    |      25 | ANGELS LIFE           |
+|        1 | PENELOPE GUINESS    |     106 | BULWORTH COMMANDMENTS |
+|        1 | PENELOPE GUINESS    |     140 | CHEAPER CLYDE         |
+|        1 | PENELOPE GUINESS    |     166 | COLOR PHILADELPHIA    |
+|        1 | PENELOPE GUINESS    |     277 | ELEPHANT TROJAN       |
+|        1 | PENELOPE GUINESS    |     361 | GLEAMING JAWBREAKER   |
+|        1 | PENELOPE GUINESS    |     438 | HUMAN GRAFFITI        |
+|        1 | PENELOPE GUINESS    |     499 | KING EVOLUTION        |
+|        1 | PENELOPE GUINESS    |     506 | LADY STAGE            |
+|        1 | PENELOPE GUINESS    |     509 | LANGUAGE COWBOY       |
+|        1 | PENELOPE GUINESS    |     605 | MULHOLLAND BEAST      |
+|        1 | PENELOPE GUINESS    |     635 | OKLAHOMA JUMANJI      |
+|        1 | PENELOPE GUINESS    |     749 | RULES HUMAN           |
+|        1 | PENELOPE GUINESS    |     832 | SPLASH GUMP           |
+|        1 | PENELOPE GUINESS    |     939 | VERTIGO NORTHWEST     |
+|        1 | PENELOPE GUINESS    |     970 | WESTWARD SEABISCUIT   |
+|        1 | PENELOPE GUINESS    |     980 | WIZARD COLDBLOODED    |
+|        2 | NICK WAHLBERG       |       3 | ADAPTATION HOLES      |
+|        2 | NICK WAHLBERG       |      31 | APACHE DIVINE         |
+|        2 | NICK WAHLBERG       |      47 | BABY HALL             |
+|        2 | NICK WAHLBERG       |     105 | BULL SHAWSHANK        |
+|        2 | NICK WAHLBERG       |     132 | CHAINSAW UPTOWN       |
+|        2 | NICK WAHLBERG       |     145 | CHISUM BEHAVIOR       |
+|        2 | NICK WAHLBERG       |     226 | DESTINY SATURDAY      |
+|        2 | NICK WAHLBERG       |     249 | DRACULA CRYSTAL       |
+|        2 | NICK WAHLBERG       |     314 | FIGHT JAWBREAKER      |
+|        2 | NICK WAHLBERG       |     321 | FLASH WARS            |
+|        2 | NICK WAHLBERG       |     357 | GILBERT PELICAN       |
+|        2 | NICK WAHLBERG       |     369 | GOODFELLAS SALUTE     |
+|        2 | NICK WAHLBERG       |     399 | HAPPINESS UNITED      |
+|        2 | NICK WAHLBERG       |     458 | INDIAN LOVE           |
+|        2 | NICK WAHLBERG       |     481 | JEKYLL FROGMEN        |
+|        2 | NICK WAHLBERG       |     485 | JERSEY SASSY          |
+|        2 | NICK WAHLBERG       |     518 | LIAISONS SWEET        |
+|        2 | NICK WAHLBERG       |     540 | LUCKY FLYING          |
+|        2 | NICK WAHLBERG       |     550 | MAGUIRE APACHE        |
+|        2 | NICK WAHLBERG       |     555 | MALLRATS UNITED       |
+|        2 | NICK WAHLBERG       |     561 | MASK PEACH            |
+|        2 | NICK WAHLBERG       |     742 | ROOF CHAMPION         |
+|        2 | NICK WAHLBERG       |     754 | RUSHMORE MERMAID      |
+|        2 | NICK WAHLBERG       |     811 | SMILE EARRING         |
+|        2 | NICK WAHLBERG       |     958 | WARDROBE PHANTOM      |
+|        3 | ED CHASE            |      17 | ALONE TRIP            |
+|        3 | ED CHASE            |      40 | ARMY FLINTSTONES      |
+|        3 | ED CHASE            |      42 | ARTIST COLDBLOODED    |
+|        3 | ED CHASE            |      87 | BOONDOCK BALLROOM     |
+|        3 | ED CHASE            |     111 | CADDYSHACK JEDI       |
+|        3 | ED CHASE            |     185 | COWBOY DOOM           |
+|        3 | ED CHASE            |     289 | EVE RESURRECTION      |
+|        3 | ED CHASE            |     329 | FORREST SONS          |
+|        3 | ED CHASE            |     336 | FRENCH HOLIDAY        |
+|        3 | ED CHASE            |     341 | FROST HEAD            |
+|        3 | ED CHASE            |     393 | HALLOWEEN NUTS        |
+|        3 | ED CHASE            |     441 | HUNTER ALTER          |
+|        3 | ED CHASE            |     453 | IMAGE PRINCESS        |
+|        3 | ED CHASE            |     480 | JEEPERS WEDDING       |
+|        3 | ED CHASE            |     539 | LUCK OPUS             |
+|        3 | ED CHASE            |     618 | NECKLACE OUTBREAK     |
+|        3 | ED CHASE            |     685 | PLATOON INSTINCT      |
+|        3 | ED CHASE            |     827 | SPICE SORORITY        |
+|        3 | ED CHASE            |     966 | WEDDING APOLLO        |
+|        3 | ED CHASE            |     967 | WEEKEND PERSONAL      |
+|        3 | ED CHASE            |     971 | WHALE BIKINI          |
+|        3 | ED CHASE            |     996 | YOUNG LANGUAGE        |
+|        4 | JENNIFER DAVIS      |      23 | ANACONDA CONFESSIONS  |
+|        4 | JENNIFER DAVIS      |      25 | ANGELS LIFE           |
+|        4 | JENNIFER DAVIS      |      56 | BAREFOOT MANCHURIAN   |
+|        4 | JENNIFER DAVIS      |      62 | BED HIGHBALL          |
+|        4 | JENNIFER DAVIS      |      79 | BLADE POLISH          |
+|        4 | JENNIFER DAVIS      |      87 | BOONDOCK BALLROOM     |
+|        4 | JENNIFER DAVIS      |     355 | GHOSTBUSTERS ELF      |
+|        4 | JENNIFER DAVIS      |     379 | GREEDY ROOTS          |
+|        4 | JENNIFER DAVIS      |     398 | HANOVER GALAXY        |
+|        4 | JENNIFER DAVIS      |     463 | INSTINCT AIRPORT      |
+|        4 | JENNIFER DAVIS      |     490 | JUMANJI BLADE         |
+|        4 | JENNIFER DAVIS      |     616 | NATIONAL STORY        |
+|        4 | JENNIFER DAVIS      |     635 | OKLAHOMA JUMANJI      |
+|        4 | JENNIFER DAVIS      |     691 | POSEIDON FOREVER      |
+|        4 | JENNIFER DAVIS      |     712 | RAIDERS ANTITRUST     |
+|        4 | JENNIFER DAVIS      |     714 | RANDOM GO             |
+|        4 | JENNIFER DAVIS      |     721 | REDS POCUS            |
+|        4 | JENNIFER DAVIS      |     798 | SILVERADO GOLDFINGER  |
+|        4 | JENNIFER DAVIS      |     832 | SPLASH GUMP           |
+|        4 | JENNIFER DAVIS      |     858 | SUBMARINE BED         |
+|        4 | JENNIFER DAVIS      |     909 | TREASURE COMMAND      |
+|        4 | JENNIFER DAVIS      |     924 | UNFORGIVEN ZOOLANDER  |
+|        5 | JOHNNY LOLLOBRIGIDA |      19 | AMADEUS HOLY          |
+|        5 | JOHNNY LOLLOBRIGIDA |      54 | BANGER PINOCCHIO      |
+|        5 | JOHNNY LOLLOBRIGIDA |      85 | BONNIE HOLOCAUST      |
+|        5 | JOHNNY LOLLOBRIGIDA |     146 | CHITTY LOCK           |
+|        5 | JOHNNY LOLLOBRIGIDA |     171 | COMMANDMENTS EXPRESS  |
+|        5 | JOHNNY LOLLOBRIGIDA |     172 | CONEHEADS SMOOCHY     |
+|        5 | JOHNNY LOLLOBRIGIDA |     202 | DADDY PITTSBURGH      |
+|        5 | JOHNNY LOLLOBRIGIDA |     203 | DAISY MENAGERIE       |
+|        5 | JOHNNY LOLLOBRIGIDA |     286 | ENOUGH RAGING         |
+|        5 | JOHNNY LOLLOBRIGIDA |     288 | ESCAPE METROPOLIS     |
+|        5 | JOHNNY LOLLOBRIGIDA |     316 | FIRE WOLVES           |
+|        5 | JOHNNY LOLLOBRIGIDA |     340 | FRONTIER CABIN        |
++----------+---------------------+---------+-----------------------+
+100 rows in set (0.01 sec)
+
+mysql> SELECT
+    ->     c.customer_id,
+    ->     CONCAT(c.first_name, ' ', c.last_name) AS cliente,
+    ->     c.email,
+    ->     p.payment_id,
+    ->     p.amount AS monto,
+    ->     p.payment_date AS fecha_pago
+    -> FROM customer c
+    -> INNER JOIN payment p
+    ->     ON c.customer_id = p.customer_id
+    -> LIMIT 100;
++-------------+------------------+-------------------------------------+------------+-------+---------------------+
+| customer_id | cliente          | email                               | payment_id | monto | fecha_pago          |
++-------------+------------------+-------------------------------------+------------+-------+---------------------+
+|           1 | MARY SMITH       | MARY.SMITH@sakilacustomer.org       |          1 |  2.99 | 2005-05-25 11:30:37 |
+|           1 | MARY SMITH       | MARY.SMITH@sakilacustomer.org       |          2 |  0.99 | 2005-05-28 10:35:23 |
+|           1 | MARY SMITH       | MARY.SMITH@sakilacustomer.org       |          3 |  5.99 | 2005-06-15 00:54:12 |
+|           1 | MARY SMITH       | MARY.SMITH@sakilacustomer.org       |          4 |  0.99 | 2005-06-15 18:02:53 |
+|           1 | MARY SMITH       | MARY.SMITH@sakilacustomer.org       |          5 |  9.99 | 2005-06-15 21:08:46 |
+|           1 | MARY SMITH       | MARY.SMITH@sakilacustomer.org       |          6 |  4.99 | 2005-06-16 15:18:57 |
+|           1 | MARY SMITH       | MARY.SMITH@sakilacustomer.org       |          7 |  4.99 | 2005-06-18 08:41:48 |
+|           1 | MARY SMITH       | MARY.SMITH@sakilacustomer.org       |          8 |  0.99 | 2005-06-18 13:33:59 |
+|           1 | MARY SMITH       | MARY.SMITH@sakilacustomer.org       |          9 |  3.99 | 2005-06-21 06:24:45 |
+|           1 | MARY SMITH       | MARY.SMITH@sakilacustomer.org       |         10 |  5.99 | 2005-07-08 03:17:05 |
+|           1 | MARY SMITH       | MARY.SMITH@sakilacustomer.org       |         11 |  5.99 | 2005-07-08 07:33:56 |
+|           1 | MARY SMITH       | MARY.SMITH@sakilacustomer.org       |         12 |  4.99 | 2005-07-09 13:24:07 |
+|           1 | MARY SMITH       | MARY.SMITH@sakilacustomer.org       |         13 |  4.99 | 2005-07-09 16:38:01 |
+|           1 | MARY SMITH       | MARY.SMITH@sakilacustomer.org       |         14 |  7.99 | 2005-07-11 10:13:46 |
+|           1 | MARY SMITH       | MARY.SMITH@sakilacustomer.org       |         15 |  2.99 | 2005-07-27 11:31:22 |
+|           1 | MARY SMITH       | MARY.SMITH@sakilacustomer.org       |         16 |  4.99 | 2005-07-28 09:04:45 |
+|           1 | MARY SMITH       | MARY.SMITH@sakilacustomer.org       |         17 |  4.99 | 2005-07-28 16:18:23 |
+|           1 | MARY SMITH       | MARY.SMITH@sakilacustomer.org       |         18 |  0.99 | 2005-07-28 17:33:39 |
+|           1 | MARY SMITH       | MARY.SMITH@sakilacustomer.org       |         19 |  0.99 | 2005-07-28 19:20:07 |
+|           1 | MARY SMITH       | MARY.SMITH@sakilacustomer.org       |         20 |  2.99 | 2005-07-29 03:58:49 |
+|           1 | MARY SMITH       | MARY.SMITH@sakilacustomer.org       |         21 |  2.99 | 2005-07-31 02:42:18 |
+|           1 | MARY SMITH       | MARY.SMITH@sakilacustomer.org       |         22 |  4.99 | 2005-08-01 08:51:04 |
+|           1 | MARY SMITH       | MARY.SMITH@sakilacustomer.org       |         23 |  3.99 | 2005-08-02 15:36:52 |
+|           1 | MARY SMITH       | MARY.SMITH@sakilacustomer.org       |         24 |  0.99 | 2005-08-02 18:01:38 |
+|           1 | MARY SMITH       | MARY.SMITH@sakilacustomer.org       |         25 |  4.99 | 2005-08-17 12:37:54 |
+|           1 | MARY SMITH       | MARY.SMITH@sakilacustomer.org       |         26 |  0.99 | 2005-08-18 03:57:29 |
+|           1 | MARY SMITH       | MARY.SMITH@sakilacustomer.org       |         27 |  0.99 | 2005-08-19 09:55:16 |
+|           1 | MARY SMITH       | MARY.SMITH@sakilacustomer.org       |         28 |  2.99 | 2005-08-19 13:56:54 |
+|           1 | MARY SMITH       | MARY.SMITH@sakilacustomer.org       |         29 |  0.99 | 2005-08-21 23:33:57 |
+|           1 | MARY SMITH       | MARY.SMITH@sakilacustomer.org       |         30 |  1.99 | 2005-08-22 01:27:57 |
+|           1 | MARY SMITH       | MARY.SMITH@sakilacustomer.org       |         31 |  2.99 | 2005-08-22 19:41:37 |
+|           1 | MARY SMITH       | MARY.SMITH@sakilacustomer.org       |         32 |  5.99 | 2005-08-22 20:03:46 |
+|           2 | PATRICIA JOHNSON | PATRICIA.JOHNSON@sakilacustomer.org |         33 |  4.99 | 2005-05-27 00:09:24 |
+|           2 | PATRICIA JOHNSON | PATRICIA.JOHNSON@sakilacustomer.org |         34 |  2.99 | 2005-06-17 20:54:58 |
+|           2 | PATRICIA JOHNSON | PATRICIA.JOHNSON@sakilacustomer.org |         35 |  2.99 | 2005-07-10 06:31:24 |
+|           2 | PATRICIA JOHNSON | PATRICIA.JOHNSON@sakilacustomer.org |         36 |  6.99 | 2005-07-10 12:38:56 |
+|           2 | PATRICIA JOHNSON | PATRICIA.JOHNSON@sakilacustomer.org |         37 |  4.99 | 2005-07-27 14:30:42 |
+|           2 | PATRICIA JOHNSON | PATRICIA.JOHNSON@sakilacustomer.org |         38 |  5.99 | 2005-07-27 15:23:02 |
+|           2 | PATRICIA JOHNSON | PATRICIA.JOHNSON@sakilacustomer.org |         39 |  5.99 | 2005-07-27 18:40:20 |
+|           2 | PATRICIA JOHNSON | PATRICIA.JOHNSON@sakilacustomer.org |         40 |  5.99 | 2005-07-29 00:12:59 |
+|           2 | PATRICIA JOHNSON | PATRICIA.JOHNSON@sakilacustomer.org |         41 |  2.99 | 2005-07-29 12:56:59 |
+|           2 | PATRICIA JOHNSON | PATRICIA.JOHNSON@sakilacustomer.org |         42 |  5.99 | 2005-07-29 17:14:29 |
+|           2 | PATRICIA JOHNSON | PATRICIA.JOHNSON@sakilacustomer.org |         43 |  4.99 | 2005-07-30 06:06:10 |
+|           2 | PATRICIA JOHNSON | PATRICIA.JOHNSON@sakilacustomer.org |         44 | 10.99 | 2005-07-30 13:47:43 |
+|           2 | PATRICIA JOHNSON | PATRICIA.JOHNSON@sakilacustomer.org |         45 |  0.99 | 2005-07-30 14:14:11 |
+|           2 | PATRICIA JOHNSON | PATRICIA.JOHNSON@sakilacustomer.org |         46 |  6.99 | 2005-07-30 16:21:13 |
+|           2 | PATRICIA JOHNSON | PATRICIA.JOHNSON@sakilacustomer.org |         47 |  6.99 | 2005-07-30 22:39:53 |
+|           2 | PATRICIA JOHNSON | PATRICIA.JOHNSON@sakilacustomer.org |         48 |  2.99 | 2005-07-31 21:58:56 |
+|           2 | PATRICIA JOHNSON | PATRICIA.JOHNSON@sakilacustomer.org |         49 |  0.99 | 2005-08-01 09:45:26 |
+|           2 | PATRICIA JOHNSON | PATRICIA.JOHNSON@sakilacustomer.org |         50 |  0.99 | 2005-08-02 02:10:56 |
+|           2 | PATRICIA JOHNSON | PATRICIA.JOHNSON@sakilacustomer.org |         51 |  5.99 | 2005-08-02 07:41:41 |
+|           2 | PATRICIA JOHNSON | PATRICIA.JOHNSON@sakilacustomer.org |         52 |  6.99 | 2005-08-02 10:43:48 |
+|           2 | PATRICIA JOHNSON | PATRICIA.JOHNSON@sakilacustomer.org |         53 |  2.99 | 2005-08-02 13:44:53 |
+|           2 | PATRICIA JOHNSON | PATRICIA.JOHNSON@sakilacustomer.org |         54 |  2.99 | 2005-08-17 03:52:18 |
+|           2 | PATRICIA JOHNSON | PATRICIA.JOHNSON@sakilacustomer.org |         55 |  2.99 | 2005-08-19 06:26:04 |
+|           2 | PATRICIA JOHNSON | PATRICIA.JOHNSON@sakilacustomer.org |         56 |  4.99 | 2005-08-21 13:24:32 |
+|           2 | PATRICIA JOHNSON | PATRICIA.JOHNSON@sakilacustomer.org |         57 |  5.99 | 2005-08-21 22:41:56 |
+|           2 | PATRICIA JOHNSON | PATRICIA.JOHNSON@sakilacustomer.org |         58 |  4.99 | 2005-08-22 13:53:04 |
+|           2 | PATRICIA JOHNSON | PATRICIA.JOHNSON@sakilacustomer.org |         59 |  4.99 | 2005-08-23 17:39:35 |
+|           3 | LINDA WILLIAMS   | LINDA.WILLIAMS@sakilacustomer.org   |         60 |  1.99 | 2005-05-27 17:17:09 |
+|           3 | LINDA WILLIAMS   | LINDA.WILLIAMS@sakilacustomer.org   |         61 |  2.99 | 2005-05-29 22:43:55 |
+|           3 | LINDA WILLIAMS   | LINDA.WILLIAMS@sakilacustomer.org   |         62 |  8.99 | 2005-06-16 01:34:05 |
+|           3 | LINDA WILLIAMS   | LINDA.WILLIAMS@sakilacustomer.org   |         63 |  6.99 | 2005-06-16 15:19:10 |
+|           3 | LINDA WILLIAMS   | LINDA.WILLIAMS@sakilacustomer.org   |         64 |  6.99 | 2005-06-17 05:15:15 |
+|           3 | LINDA WILLIAMS   | LINDA.WILLIAMS@sakilacustomer.org   |         65 |  2.99 | 2005-06-19 08:34:53 |
+|           3 | LINDA WILLIAMS   | LINDA.WILLIAMS@sakilacustomer.org   |         66 |  4.99 | 2005-07-07 10:23:25 |
+|           3 | LINDA WILLIAMS   | LINDA.WILLIAMS@sakilacustomer.org   |         67 |  4.99 | 2005-07-08 12:47:11 |
+|           3 | LINDA WILLIAMS   | LINDA.WILLIAMS@sakilacustomer.org   |         68 |  5.99 | 2005-07-27 04:54:42 |
+|           3 | LINDA WILLIAMS   | LINDA.WILLIAMS@sakilacustomer.org   |         69 | 10.99 | 2005-07-27 20:23:12 |
+|           3 | LINDA WILLIAMS   | LINDA.WILLIAMS@sakilacustomer.org   |         70 |  7.99 | 2005-07-28 03:59:21 |
+|           3 | LINDA WILLIAMS   | LINDA.WILLIAMS@sakilacustomer.org   |         71 |  6.99 | 2005-07-28 04:46:30 |
+|           3 | LINDA WILLIAMS   | LINDA.WILLIAMS@sakilacustomer.org   |         72 |  4.99 | 2005-07-28 11:46:45 |
+|           3 | LINDA WILLIAMS   | LINDA.WILLIAMS@sakilacustomer.org   |         73 |  4.99 | 2005-07-28 18:17:14 |
+|           3 | LINDA WILLIAMS   | LINDA.WILLIAMS@sakilacustomer.org   |         74 |  2.99 | 2005-07-29 11:07:04 |
+|           3 | LINDA WILLIAMS   | LINDA.WILLIAMS@sakilacustomer.org   |         75 |  1.99 | 2005-07-30 13:31:20 |
+|           3 | LINDA WILLIAMS   | LINDA.WILLIAMS@sakilacustomer.org   |         76 |  3.99 | 2005-07-30 21:45:46 |
+|           3 | LINDA WILLIAMS   | LINDA.WILLIAMS@sakilacustomer.org   |         77 |  2.99 | 2005-07-31 03:27:58 |
+|           3 | LINDA WILLIAMS   | LINDA.WILLIAMS@sakilacustomer.org   |         78 |  4.99 | 2005-07-31 11:32:58 |
+|           3 | LINDA WILLIAMS   | LINDA.WILLIAMS@sakilacustomer.org   |         79 |  5.99 | 2005-08-01 14:19:48 |
+|           3 | LINDA WILLIAMS   | LINDA.WILLIAMS@sakilacustomer.org   |         80 |  4.99 | 2005-08-18 14:49:55 |
+|           3 | LINDA WILLIAMS   | LINDA.WILLIAMS@sakilacustomer.org   |         81 |  8.99 | 2005-08-19 22:18:07 |
+|           3 | LINDA WILLIAMS   | LINDA.WILLIAMS@sakilacustomer.org   |         82 |  2.99 | 2005-08-20 06:14:12 |
+|           3 | LINDA WILLIAMS   | LINDA.WILLIAMS@sakilacustomer.org   |         83 |  8.99 | 2005-08-21 20:50:48 |
+|           3 | LINDA WILLIAMS   | LINDA.WILLIAMS@sakilacustomer.org   |         84 |  0.99 | 2005-08-22 09:37:27 |
+|           3 | LINDA WILLIAMS   | LINDA.WILLIAMS@sakilacustomer.org   |         85 |  2.99 | 2005-08-23 07:10:14 |
+|           4 | BARBARA JONES    | BARBARA.JONES@sakilacustomer.org    |         86 |  4.99 | 2005-06-15 09:31:28 |
+|           4 | BARBARA JONES    | BARBARA.JONES@sakilacustomer.org    |         87 |  0.99 | 2005-06-16 08:08:40 |
+|           4 | BARBARA JONES    | BARBARA.JONES@sakilacustomer.org    |         88 |  2.99 | 2005-06-16 14:01:27 |
+|           4 | BARBARA JONES    | BARBARA.JONES@sakilacustomer.org    |         89 |  0.99 | 2005-06-16 15:51:52 |
+|           4 | BARBARA JONES    | BARBARA.JONES@sakilacustomer.org    |         90 |  0.99 | 2005-06-17 14:31:12 |
+|           4 | BARBARA JONES    | BARBARA.JONES@sakilacustomer.org    |         91 |  5.99 | 2005-06-19 09:39:01 |
+|           4 | BARBARA JONES    | BARBARA.JONES@sakilacustomer.org    |         92 |  2.99 | 2005-07-28 02:10:10 |
+|           4 | BARBARA JONES    | BARBARA.JONES@sakilacustomer.org    |         93 |  2.99 | 2005-07-28 04:37:59 |
+|           4 | BARBARA JONES    | BARBARA.JONES@sakilacustomer.org    |         94 |  3.99 | 2005-07-29 18:44:57 |
+|           4 | BARBARA JONES    | BARBARA.JONES@sakilacustomer.org    |         95 |  5.99 | 2005-07-30 08:46:09 |
+|           4 | BARBARA JONES    | BARBARA.JONES@sakilacustomer.org    |         96 |  5.99 | 2005-07-30 18:58:00 |
+|           4 | BARBARA JONES    | BARBARA.JONES@sakilacustomer.org    |         97 |  0.99 | 2005-08-02 07:09:34 |
+|           4 | BARBARA JONES    | BARBARA.JONES@sakilacustomer.org    |         98 |  2.99 | 2005-08-02 08:20:31 |
+|           4 | BARBARA JONES    | BARBARA.JONES@sakilacustomer.org    |         99 |  4.99 | 2005-08-17 00:28:01 |
+|           4 | BARBARA JONES    | BARBARA.JONES@sakilacustomer.org    |        100 |  2.99 | 2005-08-18 00:14:03 |
++-------------+------------------+-------------------------------------+------------+-------+---------------------+
+100 rows in set (0.01 sec)
+
+mysql> SELECT
+    ->     f.film_id,
+    ->     f.title AS pelicula,
+    ->     i.inventory_id,
+    ->     i.store_id
+    -> FROM film f
+    -> INNER JOIN inventory i
+    ->     ON f.film_id = i.film_id
+    -> LIMIT 100;
++---------+-----------------------------+--------------+----------+
+| film_id | pelicula                    | inventory_id | store_id |
++---------+-----------------------------+--------------+----------+
+|       1 | ACADEMY DINOSAUR            |            1 |        1 |
+|       1 | ACADEMY DINOSAUR            |            2 |        1 |
+|       1 | ACADEMY DINOSAUR            |            3 |        1 |
+|       1 | ACADEMY DINOSAUR            |            4 |        1 |
+|       4 | AFFAIR PREJUDICE            |           16 |        1 |
+|       4 | AFFAIR PREJUDICE            |           17 |        1 |
+|       4 | AFFAIR PREJUDICE            |           18 |        1 |
+|       4 | AFFAIR PREJUDICE            |           19 |        1 |
+|       6 | AGENT TRUMAN                |           26 |        1 |
+|       6 | AGENT TRUMAN                |           27 |        1 |
+|       6 | AGENT TRUMAN                |           28 |        1 |
+|       7 | AIRPLANE SIERRA             |           32 |        1 |
+|       7 | AIRPLANE SIERRA             |           33 |        1 |
+|       9 | ALABAMA DEVIL               |           41 |        1 |
+|       9 | ALABAMA DEVIL               |           42 |        1 |
+|       9 | ALABAMA DEVIL               |           43 |        1 |
+|      10 | ALADDIN CALENDAR            |           46 |        1 |
+|      10 | ALADDIN CALENDAR            |           47 |        1 |
+|      10 | ALADDIN CALENDAR            |           48 |        1 |
+|      10 | ALADDIN CALENDAR            |           49 |        1 |
+|      11 | ALAMO VIDEOTAPE             |           53 |        1 |
+|      11 | ALAMO VIDEOTAPE             |           54 |        1 |
+|      11 | ALAMO VIDEOTAPE             |           55 |        1 |
+|      11 | ALAMO VIDEOTAPE             |           56 |        1 |
+|      12 | ALASKA PHANTOM              |           60 |        1 |
+|      12 | ALASKA PHANTOM              |           61 |        1 |
+|      12 | ALASKA PHANTOM              |           62 |        1 |
+|      15 | ALIEN CENTER                |           71 |        1 |
+|      15 | ALIEN CENTER                |           72 |        1 |
+|      16 | ALLEY EVOLUTION             |           77 |        1 |
+|      16 | ALLEY EVOLUTION             |           78 |        1 |
+|      17 | ALONE TRIP                  |           81 |        1 |
+|      17 | ALONE TRIP                  |           82 |        1 |
+|      17 | ALONE TRIP                  |           83 |        1 |
+|      18 | ALTER VICTORY               |           87 |        1 |
+|      18 | ALTER VICTORY               |           88 |        1 |
+|      18 | ALTER VICTORY               |           89 |        1 |
+|      19 | AMADEUS HOLY                |           93 |        1 |
+|      19 | AMADEUS HOLY                |           94 |        1 |
+|      19 | AMADEUS HOLY                |           95 |        1 |
+|      19 | AMADEUS HOLY                |           96 |        1 |
+|      20 | AMELIE HELLFIGHTERS         |           99 |        1 |
+|      20 | AMELIE HELLFIGHTERS         |          100 |        1 |
+|      20 | AMELIE HELLFIGHTERS         |          101 |        1 |
+|      21 | AMERICAN CIRCUS             |          102 |        1 |
+|      21 | AMERICAN CIRCUS             |          103 |        1 |
+|      22 | AMISTAD MIDSUMMER           |          108 |        1 |
+|      22 | AMISTAD MIDSUMMER           |          109 |        1 |
+|      22 | AMISTAD MIDSUMMER           |          110 |        1 |
+|      22 | AMISTAD MIDSUMMER           |          111 |        1 |
+|      23 | ANACONDA CONFESSIONS        |          115 |        1 |
+|      23 | ANACONDA CONFESSIONS        |          116 |        1 |
+|      23 | ANACONDA CONFESSIONS        |          117 |        1 |
+|      24 | ANALYZE HOOSIERS            |          120 |        1 |
+|      24 | ANALYZE HOOSIERS            |          121 |        1 |
+|      24 | ANALYZE HOOSIERS            |          122 |        1 |
+|      24 | ANALYZE HOOSIERS            |          123 |        1 |
+|      25 | ANGELS LIFE                 |          124 |        1 |
+|      25 | ANGELS LIFE                 |          125 |        1 |
+|      25 | ANGELS LIFE                 |          126 |        1 |
+|      25 | ANGELS LIFE                 |          127 |        1 |
+|      26 | ANNIE IDENTITY              |          130 |        1 |
+|      26 | ANNIE IDENTITY              |          131 |        1 |
+|      27 | ANONYMOUS HUMAN             |          135 |        1 |
+|      27 | ANONYMOUS HUMAN             |          136 |        1 |
+|      27 | ANONYMOUS HUMAN             |          137 |        1 |
+|      27 | ANONYMOUS HUMAN             |          138 |        1 |
+|      28 | ANTHEM LUKE                 |          139 |        1 |
+|      28 | ANTHEM LUKE                 |          140 |        1 |
+|      28 | ANTHEM LUKE                 |          141 |        1 |
+|      29 | ANTITRUST TOMATOES          |          142 |        1 |
+|      29 | ANTITRUST TOMATOES          |          143 |        1 |
+|      30 | ANYTHING SAVANNAH           |          144 |        1 |
+|      30 | ANYTHING SAVANNAH           |          145 |        1 |
+|      31 | APACHE DIVINE               |          146 |        1 |
+|      31 | APACHE DIVINE               |          147 |        1 |
+|      31 | APACHE DIVINE               |          148 |        1 |
+|      31 | APACHE DIVINE               |          149 |        1 |
+|      35 | ARACHNOPHOBIA ROLLERCOASTER |          160 |        1 |
+|      35 | ARACHNOPHOBIA ROLLERCOASTER |          161 |        1 |
+|      35 | ARACHNOPHOBIA ROLLERCOASTER |          162 |        1 |
+|      35 | ARACHNOPHOBIA ROLLERCOASTER |          163 |        1 |
+|      37 | ARIZONA BANG                |          167 |        1 |
+|      37 | ARIZONA BANG                |          168 |        1 |
+|      37 | ARIZONA BANG                |          169 |        1 |
+|      37 | ARIZONA BANG                |          170 |        1 |
+|      39 | ARMAGEDDON LOST             |          174 |        1 |
+|      39 | ARMAGEDDON LOST             |          175 |        1 |
+|      39 | ARMAGEDDON LOST             |          176 |        1 |
+|      43 | ATLANTIS CAUSE              |          189 |        1 |
+|      43 | ATLANTIS CAUSE              |          190 |        1 |
+|      43 | ATLANTIS CAUSE              |          191 |        1 |
+|      44 | ATTACKS HATE                |          196 |        1 |
+|      44 | ATTACKS HATE                |          197 |        1 |
+|      45 | ATTRACTION NEWTON           |          201 |        1 |
+|      45 | ATTRACTION NEWTON           |          202 |        1 |
+|      45 | ATTRACTION NEWTON           |          203 |        1 |
+|      45 | ATTRACTION NEWTON           |          204 |        1 |
+|      48 | BACKLASH UNDEFEATED         |          212 |        1 |
+|      48 | BACKLASH UNDEFEATED         |          213 |        1 |
++---------+-----------------------------+--------------+----------+
+100 rows in set (0.01 sec)
+
+mysql> SELECT
+    ->     c.customer_id,
+    ->     CONCAT(c.first_name, ' ', c.last_name) AS cliente,
+    ->     f.film_id,
+    ->     f.title AS pelicula,
+    ->     r.rental_date AS fecha_renta,
+    ->     r.return_date AS fecha_devolucion
+    -> FROM customer c
+    -> INNER JOIN rental r
+    ->     ON c.customer_id = r.customer_id
+    -> INNER JOIN inventory i
+    ->     ON r.inventory_id = i.inventory_id
+    -> INNER JOIN film f
+    ->     ON i.film_id = f.film_id
+    -> LIMIT 100;
++-------------+--------------------+---------+------------------+---------------------+---------------------+
+| customer_id | cliente            | film_id | pelicula         | fecha_renta         | fecha_devolucion    |
++-------------+--------------------+---------+------------------+---------------------+---------------------+
+|         431 | JOEL FRANCISCO     |       1 | ACADEMY DINOSAUR | 2005-07-08 19:03:15 | 2005-07-11 21:29:15 |
+|         518 | GABRIEL HARDER     |       1 | ACADEMY DINOSAUR | 2005-08-02 20:13:10 | 2005-08-11 21:35:10 |
+|         279 | DIANNE SHELTON     |       1 | ACADEMY DINOSAUR | 2005-08-21 21:27:43 | 2005-08-30 22:26:43 |
+|         411 | NORMAN CURRIER     |       1 | ACADEMY DINOSAUR | 2005-05-30 20:21:07 | 2005-06-06 00:36:07 |
+|         170 | BEATRICE ARNOLD    |       1 | ACADEMY DINOSAUR | 2005-06-17 20:24:00 | 2005-06-23 17:45:00 |
+|         161 | GERALDINE PERKINS  |       1 | ACADEMY DINOSAUR | 2005-07-07 10:41:31 | 2005-07-11 06:25:31 |
+|         581 | VIRGIL WOFFORD     |       1 | ACADEMY DINOSAUR | 2005-07-30 22:02:34 | 2005-08-06 02:09:34 |
+|         359 | WILLIE MARKHAM     |       1 | ACADEMY DINOSAUR | 2005-08-23 01:01:01 | 2005-08-30 20:08:01 |
+|          39 | DEBRA NELSON       |       1 | ACADEMY DINOSAUR | 2005-07-31 21:36:07 | 2005-08-03 23:59:07 |
+|         541 | DARREN WINDHAM     |       1 | ACADEMY DINOSAUR | 2005-08-22 23:56:37 | 2005-08-25 18:58:37 |
+|         301 | ROBERT BAUGHMAN    |       1 | ACADEMY DINOSAUR | 2005-08-02 00:47:19 | 2005-08-03 00:02:19 |
+|         344 | HENRY BILLINGSLEY  |       1 | ACADEMY DINOSAUR | 2005-08-21 18:32:42 | 2005-08-23 21:09:42 |
+|         587 | SERGIO STANFIELD   |       1 | ACADEMY DINOSAUR | 2005-05-27 07:03:28 | 2005-05-31 08:01:28 |
+|         597 | FREDDIE DUGGAN     |       1 | ACADEMY DINOSAUR | 2005-06-21 00:30:26 | 2005-06-28 03:42:26 |
+|          44 | MARIE TURNER       |       1 | ACADEMY DINOSAUR | 2005-07-07 20:59:06 | 2005-07-09 00:04:06 |
+|         252 | MATTIE HOFFMAN     |       1 | ACADEMY DINOSAUR | 2005-07-27 07:51:11 | 2005-08-01 04:08:11 |
+|         554 | DWAYNE OLVERA      |       1 | ACADEMY DINOSAUR | 2005-08-21 00:30:32 | NULL                |
+|         345 | CARL ARTIS         |       1 | ACADEMY DINOSAUR | 2005-06-15 02:57:51 | 2005-06-20 01:41:51 |
+|         406 | NATHAN RUNYON      |       1 | ACADEMY DINOSAUR | 2005-07-10 13:07:31 | 2005-07-16 13:03:31 |
+|         487 | HECTOR POINDEXTER  |       1 | ACADEMY DINOSAUR | 2005-07-29 09:41:38 | 2005-08-05 05:30:38 |
+|          92 | TINA SIMMONS       |       1 | ACADEMY DINOSAUR | 2005-08-22 00:44:08 | 2005-08-27 02:18:08 |
+|           8 | SUSAN WILSON       |       1 | ACADEMY DINOSAUR | 2005-07-31 22:08:29 | 2005-08-06 16:59:29 |
+|          34 | REBECCA SCOTT      |       1 | ACADEMY DINOSAUR | 2005-08-18 18:36:16 | 2005-08-22 22:01:16 |
+|         271 | PENNY NEAL         |       2 | ACE GOLDFINGER   | 2005-08-01 04:24:47 | 2005-08-04 05:36:47 |
+|         366 | BRANDON HUEY       |       2 | ACE GOLDFINGER   | 2006-02-14 15:16:03 | NULL                |
+|         145 | LUCILLE HOLMES     |       2 | ACE GOLDFINGER   | 2005-07-07 19:46:51 | 2005-07-08 21:55:51 |
+|          82 | KATHRYN COLEMAN    |       2 | ACE GOLDFINGER   | 2005-07-28 05:04:47 | 2005-08-05 05:12:47 |
+|         139 | AMBER DIXON        |       2 | ACE GOLDFINGER   | 2005-08-22 16:59:05 | 2005-08-30 17:01:05 |
+|         180 | STACY CUNNINGHAM   |       2 | ACE GOLDFINGER   | 2005-08-02 04:41:17 | 2005-08-09 02:13:17 |
+|         533 | JESSIE MILAM       |       2 | ACE GOLDFINGER   | 2005-08-17 09:33:02 | 2005-08-24 05:03:02 |
+|         224 | PEARL GARZA        |       3 | ADAPTATION HOLES | 2005-07-27 01:21:19 | 2005-07-29 20:33:19 |
+|         417 | TRAVIS ESTEP       |       3 | ADAPTATION HOLES | 2005-08-22 03:52:21 | 2005-08-25 04:50:21 |
+|         247 | STELLA MORENO      |       3 | ADAPTATION HOLES | 2005-08-02 15:45:10 | 2005-08-03 21:14:10 |
+|         269 | CASSANDRA WALTERS  |       3 | ADAPTATION HOLES | 2005-08-23 13:54:39 | 2005-08-26 10:17:39 |
+|          25 | DEBORAH WALKER     |       3 | ADAPTATION HOLES | 2005-05-31 04:50:07 | 2005-06-02 01:53:07 |
+|         100 | ROBIN HAYES        |       3 | ADAPTATION HOLES | 2005-06-15 18:17:28 | 2005-06-16 15:47:28 |
+|         277 | OLGA JIMENEZ       |       3 | ADAPTATION HOLES | 2005-07-06 19:11:43 | 2005-07-11 21:50:43 |
+|           1 | MARY SMITH         |       3 | ADAPTATION HOLES | 2005-08-01 08:51:04 | 2005-08-10 12:12:04 |
+|          65 | ROSE HOWARD        |       3 | ADAPTATION HOLES | 2005-08-17 13:16:38 | 2005-08-18 11:21:38 |
+|         147 | JOANNE ROBERTSON   |       3 | ADAPTATION HOLES | 2005-07-06 22:01:51 | 2005-07-12 21:35:51 |
+|         316 | STEVEN CURLEY      |       3 | ADAPTATION HOLES | 2005-07-27 23:19:29 | 2005-07-29 23:04:29 |
+|         178 | MARION SNYDER      |       3 | ADAPTATION HOLES | 2005-08-18 21:45:15 | 2005-08-24 15:52:15 |
+|         184 | VIVIAN RUIZ        |       4 | AFFAIR PREJUDICE | 2005-07-12 02:40:41 | 2005-07-16 04:56:41 |
+|         268 | NINA SOTO          |       4 | AFFAIR PREJUDICE | 2005-07-30 02:30:07 | 2005-08-02 08:24:07 |
+|         560 | JORDAN ARCHULETA   |       4 | AFFAIR PREJUDICE | 2005-08-22 21:16:54 | 2005-08-31 00:38:54 |
+|         150 | DANIELLE DANIELS   |       4 | AFFAIR PREJUDICE | 2005-05-31 00:06:02 | 2005-06-06 02:30:02 |
+|         197 | SUE PETERS         |       4 | AFFAIR PREJUDICE | 2005-06-17 18:06:14 | 2005-06-22 23:52:14 |
+|         302 | MICHAEL SILVERMAN  |       4 | AFFAIR PREJUDICE | 2005-07-10 08:51:39 | 2005-07-12 14:44:39 |
+|         418 | JEFF EAST          |       4 | AFFAIR PREJUDICE | 2005-07-27 00:26:14 | 2005-08-03 20:00:14 |
+|         151 | MEGAN PALMER       |       4 | AFFAIR PREJUDICE | 2005-08-17 07:34:55 | 2005-08-18 04:07:55 |
+|         148 | ELEANOR HUNT       |       4 | AFFAIR PREJUDICE | 2005-07-29 04:13:29 | 2005-08-04 07:09:29 |
+|         216 | NATALIE MEYER      |       4 | AFFAIR PREJUDICE | 2005-08-22 16:17:49 | 2005-08-25 20:12:49 |
+|         459 | TOMMY COLLAZO      |       4 | AFFAIR PREJUDICE | 2005-07-06 00:22:29 | 2005-07-07 22:15:29 |
+|         239 | MINNIE ROMERO      |       4 | AFFAIR PREJUDICE | 2005-07-31 13:05:29 | 2005-08-08 12:33:29 |
+|         111 | CARMEN OWENS       |       4 | AFFAIR PREJUDICE | 2005-08-22 15:26:36 | 2005-08-31 10:47:36 |
+|         261 | DEANNA BYRD        |       4 | AFFAIR PREJUDICE | 2005-05-27 20:44:36 | 2005-06-02 02:43:36 |
+|          24 | KIMBERLY LEE       |       4 | AFFAIR PREJUDICE | 2005-06-16 14:39:31 | 2005-06-19 15:37:31 |
+|          73 | BEVERLY BROOKS     |       4 | AFFAIR PREJUDICE | 2005-07-08 16:22:01 | 2005-07-15 18:29:01 |
+|         397 | JIMMY SCHRADER     |       4 | AFFAIR PREJUDICE | 2005-08-18 21:44:46 | 2005-08-19 21:58:46 |
+|          66 | JANICE WARD        |       4 | AFFAIR PREJUDICE | 2005-07-11 20:21:18 | 2005-07-19 15:56:18 |
+|         501 | RUBEN GEARY        |       4 | AFFAIR PREJUDICE | 2005-07-30 18:39:28 | 2005-07-31 15:39:28 |
+|         111 | CARMEN OWENS       |       4 | AFFAIR PREJUDICE | 2006-02-14 15:16:03 | NULL                |
+|         562 | WALLACE SLONE      |       4 | AFFAIR PREJUDICE | 2005-07-08 16:55:17 | 2005-07-15 19:34:17 |
+|         449 | OSCAR AQUINO       |       4 | AFFAIR PREJUDICE | 2005-07-28 15:11:00 | 2005-07-31 15:46:00 |
+|         464 | JEROME KENYON      |       4 | AFFAIR PREJUDICE | 2005-08-20 17:31:18 | 2005-08-24 11:33:18 |
+|         106 | CONNIE WALLACE     |       5 | AFRICAN EGG      | 2005-05-28 07:53:38 | 2005-06-04 12:45:38 |
+|         489 | RICARDO MEADOR     |       5 | AFRICAN EGG      | 2005-06-16 06:58:02 | 2005-06-23 11:24:02 |
+|         438 | BARRY LOVELACE     |       5 | AFRICAN EGG      | 2005-07-12 08:36:22 | 2005-07-20 09:03:22 |
+|         566 | CASEY MENA         |       5 | AFRICAN EGG      | 2005-08-02 09:08:44 | 2005-08-04 04:00:44 |
+|         336 | JOSHUA MARK        |       5 | AFRICAN EGG      | 2005-08-19 05:00:16 | 2005-08-26 06:12:16 |
+|         410 | CURTIS IRBY        |       5 | AFRICAN EGG      | 2005-06-18 05:21:12 | 2005-06-26 09:19:12 |
+|         266 | NORA HERRERA       |       5 | AFRICAN EGG      | 2005-07-09 18:16:08 | 2005-07-18 18:27:08 |
+|          32 | AMY LOPEZ          |       5 | AFRICAN EGG      | 2005-07-28 07:26:14 | 2005-08-03 07:45:14 |
+|         127 | ELAINE STEVENS     |       5 | AFRICAN EGG      | 2005-08-19 09:07:13 | 2005-08-27 07:49:13 |
+|         497 | GILBERT SLEDGE     |       5 | AFRICAN EGG      | 2005-07-09 02:35:43 | 2005-07-17 02:05:43 |
+|          49 | JOYCE EDWARDS      |       5 | AFRICAN EGG      | 2005-07-31 12:50:24 | 2005-08-08 08:30:24 |
+|         590 | SETH HANNON        |       5 | AFRICAN EGG      | 2006-02-14 15:16:03 | NULL                |
+|         391 | CLARENCE GAMEZ     |       6 | AGENT TRUMAN     | 2005-05-26 23:23:56 | 2005-06-01 19:56:56 |
+|          45 | JANET PHILLIPS     |       6 | AGENT TRUMAN     | 2005-06-21 15:11:02 | 2005-06-25 14:12:02 |
+|         506 | LESLIE SEWARD      |       6 | AGENT TRUMAN     | 2005-07-08 06:40:06 | 2005-07-16 05:51:06 |
+|         585 | PERRY SWAFFORD     |       6 | AGENT TRUMAN     | 2005-07-29 04:52:10 | 2005-07-30 04:01:10 |
+|         183 | IDA ANDREWS        |       6 | AGENT TRUMAN     | 2005-08-18 23:14:15 | 2005-08-22 20:23:15 |
+|          46 | CATHERINE CAMPBELL |       6 | AGENT TRUMAN     | 2005-06-20 07:33:38 | 2005-06-29 11:45:38 |
+|         355 | TERRY GRISSOM      |       6 | AGENT TRUMAN     | 2005-07-06 03:09:36 | 2005-07-12 02:15:36 |
+|          14 | BETTY WHITE        |       6 | AGENT TRUMAN     | 2005-08-01 11:55:33 | 2005-08-08 16:42:33 |
+|         389 | ALAN KAHN          |       6 | AGENT TRUMAN     | 2005-08-17 17:02:42 | 2005-08-21 16:40:42 |
+|           5 | ELIZABETH BROWN    |       6 | AGENT TRUMAN     | 2005-07-29 01:11:23 | 2005-07-31 01:53:23 |
+|         209 | TONYA CHAPMAN      |       6 | AGENT TRUMAN     | 2005-08-20 12:32:32 | 2005-08-29 10:48:32 |
+|         108 | TRACY COLE         |       6 | AGENT TRUMAN     | 2005-07-10 15:11:54 | 2005-07-15 11:51:54 |
+|          50 | DIANE COLLINS      |       6 | AGENT TRUMAN     | 2005-08-01 10:20:34 | 2005-08-09 09:20:34 |
+|         527 | CORY MEEHAN        |       6 | AGENT TRUMAN     | 2005-08-18 13:31:45 | 2005-08-25 08:26:45 |
+|         482 | MAURICE CRAWLEY    |       6 | AGENT TRUMAN     | 2005-05-26 15:32:46 | 2005-06-04 15:27:46 |
+|         213 | GINA WILLIAMSON    |       6 | AGENT TRUMAN     | 2005-06-19 04:19:04 | 2005-06-26 04:31:04 |
+|         320 | ANTHONY SCHWAB     |       6 | AGENT TRUMAN     | 2005-07-06 12:40:38 | 2005-07-11 09:29:38 |
+|         537 | CLINTON BUFORD     |       6 | AGENT TRUMAN     | 2005-07-28 08:00:38 | 2005-08-02 06:14:38 |
+|         214 | KRISTIN JOHNSTON   |       6 | AGENT TRUMAN     | 2005-08-18 11:31:34 | 2005-08-23 12:04:34 |
+|         204 | ROSEMARY SCHMIDT   |       6 | AGENT TRUMAN     | 2005-08-02 13:54:26 | 2005-08-10 19:04:26 |
+|          38 | MARTHA GONZALEZ    |       6 | AGENT TRUMAN     | 2005-08-21 16:03:01 | 2005-08-26 13:09:01 |
+|         369 | FRED WHEAT         |       7 | AIRPLANE SIERRA  | 2005-08-02 07:34:19 | 2005-08-07 09:30:19 |
+|         471 | DEAN SAUER         |       7 | AIRPLANE SIERRA  | 2005-08-22 05:58:27 | 2005-08-31 10:08:27 |
++-------------+--------------------+---------+------------------+---------------------+---------------------+
+100 rows in set (0.03 sec)
+
+mysql> SELECT a.film_id, a.title, c.name AS categoria
+    -> FROM film a
+    -> INNER JOIN film_category b
+    ->     ON a.film_id = b.film_id
+    -> INNER JOIN category c
+    ->     ON c.category_id = b.category_id
+    -> LIMIT 100;
++---------+-------------------------+-----------+
+| film_id | title                   | categoria |
++---------+-------------------------+-----------+
+|      19 | AMADEUS HOLY            | Action    |
+|      21 | AMERICAN CIRCUS         | Action    |
+|      29 | ANTITRUST TOMATOES      | Action    |
+|      38 | ARK RIDGEMONT           | Action    |
+|      56 | BAREFOOT MANCHURIAN     | Action    |
+|      67 | BERETS AGENT            | Action    |
+|      97 | BRIDE INTRIGUE          | Action    |
+|     105 | BULL SHAWSHANK          | Action    |
+|     111 | CADDYSHACK JEDI         | Action    |
+|     115 | CAMPUS REMEMBER         | Action    |
+|     126 | CASUALTIES ENCINO       | Action    |
+|     130 | CELEBRITY HORN          | Action    |
+|     162 | CLUELESS BUCKET         | Action    |
+|     194 | CROW GREASE             | Action    |
+|     205 | DANCES NONE             | Action    |
+|     210 | DARKO DORADO            | Action    |
+|     212 | DARN FORRESTER          | Action    |
+|     229 | DEVIL DESIRE            | Action    |
+|     250 | DRAGON SQUAD            | Action    |
+|     252 | DREAM PICKUP            | Action    |
+|     253 | DRIFTER COMMANDMENTS    | Action    |
+|     271 | EASY GLADIATOR          | Action    |
+|     287 | ENTRAPMENT SATISFACTION | Action    |
+|     292 | EXCITEMENT EVE          | Action    |
+|     303 | FANTASY TROOPERS        | Action    |
+|     318 | FIREHOUSE VIETNAM       | Action    |
+|     327 | FOOL MOCKINGBIRD        | Action    |
+|     329 | FORREST SONS            | Action    |
+|     360 | GLASS DYING             | Action    |
+|     371 | GOSFORD DONNIE          | Action    |
+|     375 | GRAIL FRANKENSTEIN      | Action    |
+|     395 | HANDICAP BOONDOCK       | Action    |
+|     417 | HILLS NEIGHBORS         | Action    |
+|     501 | KISSING DOLLS           | Action    |
+|     511 | LAWRENCE LOVE           | Action    |
+|     530 | LORD ARIZONA            | Action    |
+|     542 | LUST LOCK               | Action    |
+|     549 | MAGNOLIA FORRESTER      | Action    |
+|     574 | MIDNIGHT WESTWARD       | Action    |
+|     579 | MINDS TRUMAN            | Action    |
+|     586 | MOCKINGBIRD HOLLYWOOD   | Action    |
+|     594 | MONTEZUMA COMMAND       | Action    |
+|     659 | PARK CITIZEN            | Action    |
+|     664 | PATRIOT ROMAN           | Action    |
+|     697 | PRIMARY GLASS           | Action    |
+|     707 | QUEST MUSSOLINI         | Action    |
+|     717 | REAR TRADING            | Action    |
+|     732 | RINGS HEARTBREAKERS     | Action    |
+|     748 | RUGRATS SHAKESPEARE     | Action    |
+|     793 | SHRUNK DIVINE           | Action    |
+|     794 | SIDE ARK                | Action    |
+|     802 | SKY MIRACLE             | Action    |
+|     823 | SOUTH WAIT              | Action    |
+|     825 | SPEAKEASY DATE          | Action    |
+|     838 | STAGECOACH ARMAGEDDON   | Action    |
+|     850 | STORY SIDE              | Action    |
+|     869 | SUSPECTS QUILLS         | Action    |
+|     911 | TRIP NEWTON             | Action    |
+|     915 | TRUMAN CRAZY            | Action    |
+|     927 | UPRISING UPTOWN         | Action    |
+|     964 | WATERFRONT DELIVERANCE  | Action    |
+|     968 | WEREWOLF LOLA           | Action    |
+|     982 | WOMEN DORADO            | Action    |
+|     991 | WORST BANGER            | Action    |
+|      18 | ALTER VICTORY           | Animation |
+|      23 | ANACONDA CONFESSIONS    | Animation |
+|      36 | ARGONAUTS TOWN          | Animation |
+|      70 | BIKINI BORROWERS        | Animation |
+|      78 | BLACKOUT PRIVATE        | Animation |
+|      89 | BORROWERS BEDAZZLED     | Animation |
+|     118 | CANYON STOCK            | Animation |
+|     121 | CAROL TEXAS             | Animation |
+|     134 | CHAMPION FLATLINERS     | Animation |
+|     154 | CLASH FREDDY            | Animation |
+|     160 | CLUB GRAFFITI           | Animation |
+|     193 | CROSSROADS CASUALTIES   | Animation |
+|     208 | DARES PLUTO             | Animation |
+|     223 | DESIRE ALIEN            | Animation |
+|     239 | DOGMA FAMILY            | Animation |
+|     241 | DONNIE ALLEY            | Animation |
+|     243 | DOORS PRESIDENT         | Animation |
+|     245 | DOUBLE WRATH            | Animation |
+|     259 | DUCK RACER              | Animation |
+|     268 | EARLY HOME              | Animation |
+|     300 | FALCON VOLUME           | Animation |
+|     314 | FIGHT JAWBREAKER        | Animation |
+|     325 | FLOATS GARDEN           | Animation |
+|     326 | FLYING HOOK             | Animation |
+|     330 | FORRESTER COMANCHEROS   | Animation |
+|     349 | GANGS PRIDE             | Animation |
+|     355 | GHOSTBUSTERS ELF        | Animation |
+|     402 | HARPER DYING            | Animation |
+|     430 | HOOK CHARIOTS           | Animation |
+|     433 | HORN WORKING            | Animation |
+|     456 | INCH JET                | Animation |
+|     461 | INSECTS STONE           | Animation |
+|     464 | INTENTIONS EMPIRE       | Animation |
+|     470 | ISHTAR ROCKETEER        | Animation |
+|     489 | JUGGLER HARDLY          | Animation |
+|     510 | LAWLESS VISION          | Animation |
++---------+-------------------------+-----------+
+100 rows in set (0.00 sec)
+
+mysql>
